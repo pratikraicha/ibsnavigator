@@ -1,37 +1,604 @@
 <!DOCTYPE html>
-<html><head>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>IBS Navigator</title>
-<link rel="stylesheet" href="style.css">
+<title>IBS Navigator — CA Final Paper 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap">
+<style>
+  /* ── Reset & base ── */
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    --navy:   #071321;
+    --navy2:  #0d1f33;
+    --navy3:  #10243a;
+    --gold:   #d4af37;
+    --gold2:  #b8960e;
+    --gold-lt:#f0d96a;
+    --cream:  #f0ead6;
+    --muted:  #8fa3b8;
+    --white:  #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--cream);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 7%;
+    background: rgba(7,19,33,.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212,175,55,.15);
+  }
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--gold); letter-spacing: .08em;
+  }
+  .nav-logo span { color: var(--cream); font-weight: 400; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: .85rem; font-weight: 500; letter-spacing: .06em;
+    text-transform: uppercase; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    display: flex; flex-wrap: wrap;
+    align-items: center; justify-content: space-between;
+    padding: 90px 7% 80px;
+    gap: 48px;
+    min-height: 92vh;
+  }
+  .hero-text { flex: 1 1 460px; max-width: 560px; }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: .72rem; font-weight: 600; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--gold);
+    border: 1px solid rgba(212,175,55,.35);
+    border-radius: 40px; padding: 6px 16px; margin-bottom: 28px;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 700; line-height: 1.12;
+    color: var(--white); margin-bottom: 8px;
+  }
+  .hero-title .gold { color: var(--gold); }
+  .hero-sub {
+    font-size: 1.05rem; color: var(--muted);
+    margin-bottom: 12px; font-weight: 300;
+  }
+  .hero-tagline {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem; color: var(--gold);
+    letter-spacing: .12em; margin-bottom: 32px;
+    opacity: .85;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px;
+  }
+  .badge {
+    font-size: .75rem; font-weight: 500;
+    padding: 5px 14px; border-radius: 4px;
+    background: rgba(212,175,55,.1);
+    border: 1px solid rgba(212,175,55,.3);
+    color: var(--gold-lt);
+  }
+  .hero-btns { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 6px;
+    text-decoration: none; font-weight: 600; font-size: .9rem;
+    transition: all .22s; cursor: pointer; border: none;
+  }
+  .btn-gold {
+    background: var(--gold); color: var(--navy);
+  }
+  .btn-gold:hover { background: var(--gold-lt); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,175,55,.3); }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--gold); color: var(--gold);
+  }
+  .btn-outline:hover { background: rgba(212,175,55,.1); transform: translateY(-2px); }
+
+  /* Hero book visual */
+  .hero-visual {
+    flex: 0 0 auto;
+    display: flex; justify-content: center; align-items: center;
+    position: relative;
+  }
+  .book-glow {
+    position: absolute; inset: -30px;
+    background: radial-gradient(ellipse at center, rgba(212,175,55,.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-visual img {
+    max-width: 370px; width: 90vw;
+    border-radius: 12px;
+    box-shadow: 0 32px 80px rgba(0,0,0,.7), 0 0 0 1px rgba(212,175,55,.15);
+    position: relative; z-index: 1;
+    transition: transform .4s;
+  }
+  .hero-visual img:hover { transform: translateY(-6px) rotate(1deg); }
+
+  /* price badge on cover */
+  .price-bubble {
+    position: absolute; bottom: 24px; right: -12px; z-index: 2;
+    background: var(--gold); color: var(--navy);
+    border-radius: 50%; width: 88px; height: 88px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif;
+    box-shadow: 0 4px 20px rgba(212,175,55,.4);
+  }
+  .price-bubble .launch { font-size: .55rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .price-bubble .amount { font-size: 1.15rem; font-weight: 700; line-height: 1; }
+  .price-bubble .mrp { font-size: .6rem; text-decoration: line-through; opacity: .65; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex; align-items: center; gap: 16px;
+    padding: 0 7%; margin-bottom: 0;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1;
+    height: 1px; background: rgba(212,175,55,.2);
+  }
+  .divider span {
+    font-family: 'Cinzel', serif;
+    font-size: .7rem; letter-spacing: .2em;
+    color: rgba(212,175,55,.5); text-transform: uppercase;
+  }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 80px 7%; }
+  .section-label {
+    font-size: .72rem; font-weight: 600; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 12px; opacity: .8;
+  }
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 700; color: var(--white);
+    margin-bottom: 16px; line-height: 1.2;
+  }
+  .section-desc {
+    font-size: .98rem; color: var(--muted);
+    max-width: 580px; margin-bottom: 48px;
+    line-height: 1.7;
+  }
+
+  /* ── ABOUT / FEATURES ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+  }
+  .feat-card {
+    background: var(--navy3);
+    border: 1px solid rgba(212,175,55,.12);
+    border-radius: 12px; padding: 28px 24px;
+    transition: border-color .2s, transform .2s;
+  }
+  .feat-card:hover {
+    border-color: rgba(212,175,55,.4);
+    transform: translateY(-3px);
+  }
+  .feat-icon { font-size: 1.6rem; margin-bottom: 14px; }
+  .feat-title {
+    font-family: 'Cinzel', serif;
+    font-size: .9rem; font-weight: 700;
+    color: var(--gold); margin-bottom: 8px;
+    letter-spacing: .06em;
+  }
+  .feat-desc { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── HUBS ROADMAP ── */
+  #hubs { background: var(--navy2); }
+  .hubs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .hub-card {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: var(--navy);
+    border: 1px solid rgba(212,175,55,.1);
+    border-radius: 10px; padding: 16px 18px;
+    transition: border-color .2s;
+  }
+  .hub-card:hover { border-color: rgba(212,175,55,.35); }
+  .hub-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--gold); min-width: 28px;
+    opacity: .7;
+  }
+  .hub-info {}
+  .hub-name {
+    font-size: .82rem; font-weight: 600;
+    color: var(--white); margin-bottom: 3px;
+    letter-spacing: .02em;
+  }
+  .hub-sub { font-size: .74rem; color: var(--muted); }
+
+  /* subjects strip */
+  .subjects-strip {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 40px;
+  }
+  .subject-tag {
+    padding: 6px 16px; border-radius: 4px;
+    font-size: .75rem; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+  }
+  .s-fr  { background: #1a3a6b; color: #7eb3ff; }
+  .s-afm { background: #1a3b1a; color: #7edd7e; }
+  .s-aud { background: #3b2b00; color: #ffc94d; }
+  .s-dt  { background: #3b1a00; color: #ff9966; }
+  .s-idt { background: #2d0a3b; color: #c97eff; }
+  .s-law { background: #3b0a0a; color: #ff7e7e; }
+  .s-spm { background: #003b33; color: #7efff4; }
+
+  /* ── SAMPLE PDF ── */
+  #sample { background: var(--navy); }
+  .pdf-wrapper {
+    display: flex; flex-wrap: wrap; gap: 40px; align-items: center;
+  }
+  .pdf-frame {
+    flex: 1 1 480px;
+    border: 1px solid rgba(212,175,55,.2);
+    border-radius: 12px; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  }
+  .pdf-frame iframe {
+    display: block; width: 100%; height: 500px; border: none;
+  }
+  .pdf-info { flex: 0 1 280px; }
+  .pdf-info h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem; color: var(--white); margin-bottom: 16px;
+  }
+  .pdf-features { list-style: none; margin-bottom: 28px; }
+  .pdf-features li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: .88rem; color: var(--muted);
+    padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .pdf-features li span:first-child { color: var(--gold); font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── PAYMENT / ORDER ── */
+  #order { background: var(--navy2); }
+  .order-layout {
+    display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start;
+  }
+  .order-text { flex: 1 1 360px; }
+  .price-display {
+    margin: 24px 0;
+  }
+  .price-main {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem; font-weight: 700; color: var(--gold);
+    line-height: 1;
+  }
+  .price-mrp {
+    font-size: 1.1rem; color: var(--muted);
+    text-decoration: line-through; margin-left: 12px;
+  }
+  .price-note {
+    font-size: .8rem; color: var(--muted); margin-top: 6px;
+  }
+  .what-you-get {
+    list-style: none; margin: 24px 0 32px;
+  }
+  .what-you-get li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: .88rem; color: var(--cream);
+    padding: 7px 0;
+  }
+  .what-you-get li::before {
+    content: '✦'; color: var(--gold); font-size: .7rem; flex-shrink: 0;
+  }
+  .order-ctas { display: flex; flex-direction: column; gap: 12px; }
+  .btn-wa {
+    background: #25D366; color: #fff;
+    justify-content: center;
+  }
+  .btn-wa:hover { background: #1ebe5a; }
+
+  /* QR column */
+  .qr-column { flex: 0 0 auto; text-align: center; }
+  .qr-box {
+    background: var(--navy);
+    border: 1px solid rgba(212,175,55,.2);
+    border-radius: 16px; padding: 28px;
+    display: inline-block;
+  }
+  .qr-box img {
+    width: 200px; height: 200px;
+    border-radius: 8px; display: block; margin-bottom: 16px;
+  }
+  .qr-label {
+    font-family: 'Cinzel', serif;
+    font-size: .75rem; letter-spacing: .12em;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 4px;
+  }
+  .qr-upi {
+    font-size: .75rem; color: var(--muted);
+  }
+  .qr-steps {
+    margin-top: 14px; text-align: left;
+  }
+  .qr-steps p {
+    font-size: .75rem; color: var(--muted);
+    padding: 4px 0; display: flex; gap: 8px; align-items: flex-start;
+  }
+  .qr-steps p span:first-child {
+    color: var(--gold); font-weight: 700; flex-shrink: 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #040d16;
+    border-top: 1px solid rgba(212,175,55,.1);
+    padding: 40px 7%;
+    display: flex; flex-wrap: wrap;
+    justify-content: space-between; align-items: center;
+    gap: 20px;
+  }
+  .footer-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem; font-weight: 700; color: var(--gold);
+  }
+  .footer-brand small {
+    display: block; font-family: 'Inter', sans-serif;
+    font-size: .75rem; color: var(--muted);
+    font-weight: 400; margin-top: 4px; letter-spacing: 0;
+  }
+  .footer-copy { font-size: .78rem; color: var(--muted); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero { padding: 60px 5% 60px; }
+    section { padding: 60px 5%; }
+    .nav { padding: 14px 5%; }
+    .nav-links { gap: 18px; }
+    .price-bubble { width: 72px; height: 72px; right: 4px; bottom: 12px; }
+    .price-bubble .amount { font-size: .95rem; }
+    .pdf-frame iframe { height: 380px; }
+    footer { flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .nav-links a { font-size: .72rem; }
+    .hero-title { font-size: 2rem; }
+    .hero-visual img { max-width: 280px; }
+  }
+</style>
 </head>
 <body>
+
+<!-- NAV -->
 <header class="nav">
-<div class="logo">IBS Navigator</div>
-<nav><a href="#hero">Home</a><a href="#price">Pricing</a><a href="#contact">Contact</a></nav>
+  <div class="nav-logo">IBS <span>Navigator</span></div>
+  <nav class="nav-links">
+    <a href="#about">About</a>
+    <a href="#hubs">Hubs</a>
+    <a href="#sample">Preview</a>
+    <a href="#order">Order</a>
+  </nav>
 </header>
 
-<section id="hero" class="hero">
-<div class="left">
-<h1>Navigate. Integrate. Answer.</h1>
-<p>India's First Navigation Book for CA Final Paper 6 (IBS)</p>
-<div class="buttons">
-<a class="gold" href="IBS_Navigator_5_Page_Merged.pdf" target="_blank">View Sample PDF</a>
-<a class="dark" href="https://wa.me/919179247094?text=I want to order IBS Navigator">Order on WhatsApp</a>
-</div>
-</div>
-<div class="right">
-<img src="cover.jpg" alt="Book Cover">
-</div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">CA Final · Paper 6 · New Syllabus</div>
+    <h1 class="hero-title">
+      Navigate.<br>Integrate.<br><span class="gold">Answer.</span>
+    </h1>
+    <p class="hero-sub">India's first navigation book for CA Final IBS</p>
+    <p class="hero-tagline">One Business Event. Seven Subject Lenses. One Structured Answer.</p>
+    <div class="hero-badges">
+      <span class="badge">14 Business Hubs</span>
+      <span class="badge">50 ICAI Case Summaries</span>
+      <span class="badge">300+ Pages</span>
+      <span class="badge">Open-Book Designed</span>
+    </div>
+    <div class="hero-btns">
+      <a class="btn btn-gold" href="#sample">📄 View Sample Pages</a>
+      <a class="btn btn-outline" href="#order">Order Now</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="book-glow"></div>
+    <img src="cover.jpg" alt="IBS Navigator Book Cover">
+    <div class="price-bubble">
+      <span class="launch">Offer</span>
+      <span class="amount">₹1099</span>
+      <span class="mrp">₹1299</span>
+    </div>
+  </div>
 </section>
 
-<section id="price" class="price">
-<div class="card">
-<h2>Launch Offer</h2>
-<h3>₹1099 <span>₹1299</span></h3>
-<p>Premium Navigation Book for CA Final IBS.</p>
-</div>
+<div class="divider"><span>What's inside</span></div>
+
+<!-- ABOUT / FEATURES -->
+<section id="about">
+  <p class="section-label">About the Book</p>
+  <h2 class="section-title">Built for the Open-Book Exam</h2>
+  <p class="section-desc">IBS Navigator organises all 7 subjects around 14 real-world business event hubs so you can find, connect, and apply concepts faster during the 4-hour examination.</p>
+
+  <div class="features-grid">
+    <div class="feat-card">
+      <div class="feat-icon">🧭</div>
+      <div class="feat-title">14 Integrated Concept Hubs</div>
+      <div class="feat-desc">One hub per business event archetype with subject mix, answer order, and common traps.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">📋</div>
+      <div class="feat-title">50 ICAI Case Summaries</div>
+      <div class="feat-desc">MCQ answers and descriptive approaches with hub mapping and difficulty rating for every case.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🔢</div>
+      <div class="feat-title">Curated Formulas & Standards</div>
+      <div class="feat-desc">Key formulas, selected SAs, relevant Sections, and Ind AS references — all in one place.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🌳</div>
+      <div class="feat-title">Decision Trees</div>
+      <div class="feat-desc">Visual flowcharts for complex determinations like GST liability — memorise the logic, apply it fast.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">📑</div>
+      <div class="feat-title">Quick Revision & Index</div>
+      <div class="feat-desc">A–Z concept index plus a standard index for rapid navigation during the open-book exam.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🎯</div>
+      <div class="feat-title">100% ICAI Aligned</div>
+      <div class="feat-desc">Content mapped to exam expectations, MTPs, and RTPs with an integrated approach across all 7 subjects.</div>
+    </div>
+  </div>
 </section>
 
-<footer id="contact">© 2026 IBS Navigator</footer>
-</body></html>
+<div class="divider"><span>All 7 subjects covered</span></div>
+
+<!-- SUBJECTS STRIP + HUBS -->
+<section id="hubs">
+  <p class="section-label">14 Business Hub Roadmap</p>
+  <h2 class="section-title">Every Major Business Event Covered</h2>
+  <p class="section-desc">A structured flow through 14 hubs that cover the complete CA Final IBS syllabus across all seven subjects.</p>
+
+  <div class="subjects-strip">
+    <span class="subject-tag s-fr">FR</span>
+    <span class="subject-tag s-afm">AFM</span>
+    <span class="subject-tag s-aud">Audit</span>
+    <span class="subject-tag s-dt">DT</span>
+    <span class="subject-tag s-idt">IDT</span>
+    <span class="subject-tag s-law">Law</span>
+    <span class="subject-tag s-spm">SPOM</span>
+  </div>
+
+  <div class="hubs-grid">
+    <div class="hub-card"><span class="hub-num">01</span><div class="hub-info"><div class="hub-name">Acquisition & Restructuring</div><div class="hub-sub">Mergers, Amalgamations, Acquisitions, Business Transfer</div></div></div>
+    <div class="hub-card"><span class="hub-num">02</span><div class="hub-info"><div class="hub-name">Financing & Fund Management</div><div class="hub-sub">Raising Finance, Instruments, Loans, Working Capital</div></div></div>
+    <div class="hub-card"><span class="hub-num">03</span><div class="hub-info"><div class="hub-name">Investment & Project Decisions</div><div class="hub-sub">Capital Budgeting, Project Appraisal, Risk Analysis</div></div></div>
+    <div class="hub-card"><span class="hub-num">04</span><div class="hub-info"><div class="hub-name">Operations & Supply Chain</div><div class="hub-sub">Production, Inventory, Outsourcing, Quality Management</div></div></div>
+    <div class="hub-card"><span class="hub-num">05</span><div class="hub-info"><div class="hub-name">Taxation & Compliance</div><div class="hub-sub">Direct Tax, Indirect Tax, GST, Compliance Matters</div></div></div>
+    <div class="hub-card"><span class="hub-num">06</span><div class="hub-info"><div class="hub-name">Risk & Assurance</div><div class="hub-sub">Risk Management, Internal Control, Audit & Assurance</div></div></div>
+    <div class="hub-card"><span class="hub-num">07</span><div class="hub-info"><div class="hub-name">Performance & Measurement</div><div class="hub-sub">KPIs, Balanced Scorecard, Performance Evaluation</div></div></div>
+    <div class="hub-card"><span class="hub-num">08</span><div class="hub-info"><div class="hub-name">Strategy & Competitive Advantage</div><div class="hub-sub">Business Strategy, Porter's, SWOT, Blue Ocean</div></div></div>
+    <div class="hub-card"><span class="hub-num">09</span><div class="hub-info"><div class="hub-name">Governance & Ethics</div><div class="hub-sub">Corporate Governance, Ethics, Sustainability</div></div></div>
+    <div class="hub-card"><span class="hub-num">10</span><div class="hub-info"><div class="hub-name">Human Capital & Leadership</div><div class="hub-sub">HR Strategy, Motivation, Leadership, Culture</div></div></div>
+    <div class="hub-card"><span class="hub-num">11</span><div class="hub-info"><div class="hub-name">Public Sector & Government</div><div class="hub-sub">PSUs, Budgeting, NITI Aayog, Policy & Regulations</div></div></div>
+    <div class="hub-card"><span class="hub-num">12</span><div class="hub-info"><div class="hub-name">Global Business & International Trade</div><div class="hub-sub">Export-Import, Forex, Globalization, WTO</div></div></div>
+    <div class="hub-card"><span class="hub-num">13</span><div class="hub-info"><div class="hub-name">Technology & Digital Transformation</div><div class="hub-sub">IT Systems, Data Analytics, AI, Automation</div></div></div>
+    <div class="hub-card"><span class="hub-num">14</span><div class="hub-info"><div class="hub-name">Corporate Rescue & Valuation</div><div class="hub-sub">IBC, Valuation, Turnaround, Liquidation</div></div></div>
+  </div>
+</section>
+
+<div class="divider"><span>See inside</span></div>
+
+<!-- SAMPLE PDF -->
+<section id="sample">
+  <p class="section-label">Sample Preview</p>
+  <h2 class="section-title">Look Before You Order</h2>
+
+  <div class="pdf-wrapper">
+    <div class="pdf-frame">
+      <iframe src="DOC-20260627-WA0013_.pdf" title="IBS Navigator Sample PDF"></iframe>
+    </div>
+    <div class="pdf-info">
+      <h3>6-Page Sample</h3>
+      <ul class="pdf-features">
+        <li><span>✦</span><span>Cover page and book overview</span></li>
+        <li><span>✦</span><span>About IBS Navigator — key features & design</span></li>
+        <li><span>✦</span><span>Full 14 Business Hub roadmap with subject wheel</span></li>
+        <li><span>✦</span><span>Decision tree sample — Lease vs Hire Purchase vs Loan</span></li>
+        <li><span>✦</span><span>GST Supply classification with flowchart & examples</span></li>
+        <li><span>✦</span><span>IBS Navigator vs Others comparison table</span></li>
+      </ul>
+      <a class="btn btn-gold" href="DOC-20260627-WA0013_.pdf" target="_blank">⬇ Download Sample PDF</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span>Get your copy</span></div>
+
+<!-- ORDER -->
+<section id="order">
+  <div class="order-layout">
+    <div class="order-text">
+      <p class="section-label">Founding Edition</p>
+      <h2 class="section-title">Order Your Copy</h2>
+      <div class="price-display">
+        <span class="price-main">₹1,099</span>
+        <span class="price-mrp">₹1,299</span>
+        <p class="price-note">Launch price · Limited period offer · Physical book delivered</p>
+      </div>
+      <ul class="what-you-get">
+        <li>Physical copy of IBS Navigator (300+ pages)</li>
+        <li>14 integrated business hub chapters</li>
+        <li>50 ICAI case summaries with solutions</li>
+        <li>Flowcharts, decision trees & diagrams</li>
+        <li>A–Z concept index for open-book navigation</li>
+        <li>Past exam questions — MTPs & RTPs</li>
+      </ul>
+      <div class="order-ctas">
+        <a class="btn btn-wa" href="https://wa.me/919179247094?text=I want to order IBS Navigator" target="_blank">
+          💬 Order on WhatsApp
+        </a>
+        <a class="btn btn-outline" href="https://wa.me/919179247094?text=I have a query about IBS Navigator" target="_blank">
+          Ask a Question
+        </a>
+      </div>
+    </div>
+
+    <div class="qr-column">
+      <div class="qr-box">
+        <img src="qr.jpg" alt="Paytm QR Code — UPI 9179247094@ptsbi" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div style="display:none;width:200px;height:200px;background:var(--navy3);border:2px dashed rgba(212,175,55,.3);border-radius:8px;align-items:center;justify-content:center;text-align:center;padding:16px;margin-bottom:16px;">
+          <div>
+            <div style="font-size:2rem;margin-bottom:8px;">📱</div>
+            <div style="font-size:.75rem;color:var(--muted);">Upload qr.jpg to your repo to show QR here</div>
+          </div>
+        </div>
+        <div class="qr-label">Scan to Pay</div>
+        <div class="qr-upi">UPI: 9179247094@ptsbi</div>
+        <div class="qr-steps">
+          <p><span>1.</span><span>Scan QR with any UPI app</span></p>
+          <p><span>2.</span><span>Pay ₹1,099</span></p>
+          <p><span>3.</span><span>Send screenshot on WhatsApp</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    IBS Navigator
+    <small>By Pratik Raicha · CA Final Paper 6 · Founding Edition 2026</small>
+  </div>
+  <div class="footer-copy">© 2026 IBS Navigator. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
