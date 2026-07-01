@@ -381,6 +381,66 @@ gtag('config', 'G-4VZKQMQV2T');
   }
   .footer-copy { font-size: .78rem; color: var(--muted); }
 
+  /* ── LEAD GATE MODAL ── */
+  .lead-modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(4,10,17,.82); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .lead-modal {
+    position: relative;
+    width: 100%; max-width: 380px;
+    background: var(--navy3);
+    border: 1px solid rgba(212,175,55,.3);
+    border-radius: 14px; padding: 36px 28px 28px;
+    box-shadow: 0 24px 70px rgba(0,0,0,.6);
+    text-align: center;
+  }
+  .lead-modal-close {
+    position: absolute; top: 12px; right: 14px;
+    background: none; border: none; color: var(--muted);
+    font-size: 1.1rem; cursor: pointer; line-height: 1;
+  }
+  .lead-modal-close:hover { color: var(--gold); }
+  .lead-modal-icon { font-size: 1.8rem; margin-bottom: 10px; }
+  .lead-modal h3 {
+    font-family: 'Cinzel', serif; color: var(--white);
+    font-size: 1.25rem; margin-bottom: 8px;
+  }
+  .lead-modal p { font-size: .85rem; color: var(--muted); margin-bottom: 20px; }
+  .lead-modal form { display: flex; flex-direction: column; gap: 12px; }
+  .lead-modal input {
+    width: 100%; padding: 12px 14px; border-radius: 6px;
+    background: var(--navy); border: 1px solid rgba(212,175,55,.25);
+    color: var(--cream); font-size: .9rem; font-family: 'Inter', sans-serif;
+    outline: none;
+  }
+  .lead-modal input:focus { border-color: var(--gold); }
+  .lead-modal input::placeholder { color: var(--muted); }
+  .lead-error { color: #ff7e7e; font-size: .78rem; min-height: 1em; text-align: left; }
+  .lead-privacy { font-size: .72rem; color: var(--muted); margin-top: 16px; margin-bottom: 0; opacity: .75; }
+
+  /* ── PDF LOCKED STATE ── */
+  .pdf-frame { position: relative; min-height: 500px; }
+  .pdf-locked {
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; border-radius: 12px;
+  }
+  .pdf-locked-bg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; filter: blur(14px) brightness(.35);
+    transform: scale(1.1);
+  }
+  .pdf-locked-content {
+    position: relative; z-index: 1; text-align: center; padding: 20px;
+  }
+  .pdf-locked-icon { font-size: 2rem; margin-bottom: 10px; }
+  .pdf-locked-text {
+    font-size: .95rem; color: var(--cream); margin-bottom: 20px;
+    max-width: 260px; margin-left: auto; margin-right: auto;
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     .hero { padding: 60px 5% 60px; }
@@ -481,7 +541,7 @@ gtag('config', 'G-4VZKQMQV2T');
     <div class="feat-card">
       <div class="feat-icon">🎯</div>
       <div class="feat-title">100% ICAI Aligned</div>
-      <div class="feat-desc">Content mapped to exam expectations, MTPs, and RTPs with an integrated approach across all 7 subjects.</div>
+      <div class="feat-desc">Content mapped to exam expectations with an integrated approach across all 7 subjects.</div>
     </div>
   </div>
 </section>
@@ -506,19 +566,14 @@ gtag('config', 'G-4VZKQMQV2T');
 
   <div class="hubs-grid">
     <div class="hub-card"><span class="hub-num">01</span><div class="hub-info"><div class="hub-name">Acquisition & Business Combination</div><div class="hub-sub">Acquisition · Merger · Amalgamation · Arrangement</div></div></div>
-    <div class="hub-card"><span class="hub-num">02</span><div class="hub-info"><div class="hub-name">Reporting & Disclosure</div><div class="hub-sub">Revenue recognition · Lease · ESOP · Provision · Ind AS</div></div></div>
-    <div class="hub-card"><span class="hub-num">03</span><div class="hub-info"><div class="hub-name">Strategic Framework</div><div class="hub-sub">Porter's Five Forces · Business Model Canvas · Building Block · Triple Bottom Line</div></div></div>
-    <div class="hub-card"><span class="hub-num">04</span><div class="hub-info"><div class="hub-name">Direct Tax Planning</div><div class="hub-sub">Capital gains · TDS · Residential status · Business income · PGBP</div></div></div>
     <div class="hub-card"><span class="hub-num">05</span><div class="hub-info"><div class="hub-name">GST & Customs</div><div class="hub-sub">GST · ITC · Place of supply · RCM · E-way bill · Zero-rated · Export</div></div></div>
-    <div class="hub-card"><span class="hub-num">06</span><div class="hub-info"><div class="hub-name">Corporate Law & Governance</div><div class="hub-sub">Director · Board meeting · AGM · RPT · SEBI · NCLT</div></div></div>
     <div class="hub-card"><span class="hub-num">07</span><div class="hub-info"><div class="hub-name">Audit & Assurance</div><div class="hub-sub">SA · Auditor · Risk assessment · Going concern · KAM · CARO</div></div></div>
-    <div class="hub-card"><span class="hub-num">08</span><div class="hub-info"><div class="hub-name">Treasury, Forex & Risk</div><div class="hub-sub">Forward contract · Hedging · Currency exposure · ECB</div></div></div>
-    <div class="hub-card"><span class="hub-num">09</span><div class="hub-info"><div class="hub-name">Costing & Performance</div><div class="hub-sub">Marginal costing · ABC · Standard costing · ROI · Make-or-buy</div></div></div>
-    <div class="hub-card"><span class="hub-num">10</span><div class="hub-info"><div class="hub-name">Cross-Border & Intl Tax</div><div class="hub-sub">DTAA · Transfer pricing (international) · Section 195 · NRI</div></div></div>
-    <div class="hub-card"><span class="hub-num">11</span><div class="hub-info"><div class="hub-name">Investment & Wealth</div><div class="hub-sub">Mutual fund · NAV · Portfolio · CAPM · NPV/IRR · WACC</div></div></div>
-    <div class="hub-card"><span class="hub-num">12</span><div class="hub-info"><div class="hub-name">ESG & Sustainability</div><div class="hub-sub">ESG · BRSR · Triple Bottom Line · CSR · Sustainability · Planet</div></div></div>
-    <div class="hub-card"><span class="hub-num">13</span><div class="hub-info"><div class="hub-name">Professional Ethics</div><div class="hub-sub">Independence · Objectivity · Confidentiality · CA practice · PMLA</div></div></div>
-    <div class="hub-card"><span class="hub-num">14</span><div class="hub-info"><div class="hub-name">Consolidation & RPT</div><div class="hub-sub">Subsidiary · Associate · NCI · Intragroup · RPT · Ind AS 24</div></div></div>
+    <div class="hub-card" style="align-items:center;justify-content:center;text-align:center;border-style:dashed;border-color:rgba(212,175,55,.3);">
+      <div class="hub-info">
+        <div class="hub-name" style="color:var(--gold);">+ 11 More Hubs Inside</div>
+        <div class="hub-sub">Treasury & Forex · Costing · Cross-Border Tax · ESG · Ethics · Consolidation & more</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -528,14 +583,22 @@ gtag('config', 'G-4VZKQMQV2T');
 <section id="sample">
   <p class="section-label">Sample Preview</p>
   <h2 class="section-title">Look Before You Order</h2>
-  <p class="section-desc">A curated 5-page preview — cover, structure, sample hub content, and what you get in the full 268-page book.</p>
+  <p class="section-desc">A curated 6-page preview — cover, structure, sample hub content, and what you get in the full 268-page book.</p>
 
   <div class="pdf-wrapper">
-    <div class="pdf-frame">
-      <iframe src="IBS_Navigator_Sample.pdf" title="IBS Navigator Sample PDF"></iframe>
+    <div class="pdf-frame" id="pdfFrameWrap">
+      <div class="pdf-locked" id="pdfLocked">
+        <img src="cover.jpg" class="pdf-locked-bg" alt="">
+        <div class="pdf-locked-content">
+          <div class="pdf-locked-icon">🔒</div>
+          <div class="pdf-locked-text">Enter your name & mobile number to unlock the 6-page sample preview</div>
+          <button type="button" class="btn btn-gold" onclick="requireLead('view')">👁 View Sample PDF</button>
+        </div>
+      </div>
+      <iframe id="pdfIframe" title="IBS Navigator Sample PDF" style="display:none;"></iframe>
     </div>
     <div class="pdf-info">
-      <h3>5-Page Sample</h3>
+      <h3>6-Page Sample</h3>
       <ul class="pdf-features">
         <li><span>✦</span><span>Cover — full design with subject pills & feature overview</span></li>
         <li><span>✦</span><span>About the Book — author note, core insight & what's inside</span></li>
@@ -543,10 +606,27 @@ gtag('config', 'G-4VZKQMQV2T');
         <li><span>✦</span><span>Hub 01 Sample — cross-reference matrix across FR, AFM, DT, LAW, Audit</span></li>
         <li><span>✦</span><span>Examiner's Trap callout — the kind of insight you get in every hub</span></li>
       </ul>
-      <a class="btn btn-gold" href="IBS_Navigator_Sample.pdf" target="_blank" download>⬇ Download Sample PDF</a>
+      <button type="button" class="btn btn-gold" onclick="requireLead('download')" style="width:100%;justify-content:center;">⬇ Download Sample PDF</button>
     </div>
   </div>
 </section>
+
+<!-- LEAD CAPTURE MODAL -->
+<div class="lead-modal-overlay" id="leadModal">
+  <div class="lead-modal">
+    <button type="button" class="lead-modal-close" onclick="closeLeadModal()">✕</button>
+    <div class="lead-modal-icon">🧭</div>
+    <h3>Unlock Sample Preview</h3>
+    <p>Enter your details once to view &amp; download the free sample of IBS Navigator.</p>
+    <form id="leadForm" onsubmit="return submitLeadForm(event)">
+      <input type="text" id="leadName" placeholder="Full Name" autocomplete="name" required>
+      <input type="tel" id="leadMobile" placeholder="Mobile Number (10 digits)" autocomplete="tel" inputmode="numeric" maxlength="10" required>
+      <div class="lead-error" id="leadError"></div>
+      <button type="submit" class="btn btn-gold" id="leadSubmitBtn" style="width:100%;justify-content:center;">Unlock Sample →</button>
+    </form>
+    <p class="lead-privacy">We'll only use this to share exam-prep updates about IBS Navigator. No spam.</p>
+  </div>
+</div>
 
 <div class="divider"><span>Get your copy</span></div>
 
@@ -567,7 +647,6 @@ gtag('config', 'G-4VZKQMQV2T');
         <li>50 ICAI case summaries with solutions</li>
         <li>Flowcharts, decision trees & diagrams</li>
         <li>A–Z concept index for open-book navigation</li>
-        <li>Past exam questions — MTPs & RTPs</li>
       </ul>
       <div class="order-ctas">
         <a class="btn btn-wa" href="https://wa.me/919179247094?text=I want to order IBS Navigator" target="_blank">
@@ -608,6 +687,133 @@ gtag('config', 'G-4VZKQMQV2T');
   </div>
   <div class="footer-copy">© 2026 IBS Navigator. All rights reserved.</div>
 </footer>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   LEAD GATE — captures Name + Mobile before unlocking the
+   sample PDF, and pings a Telegram bot so you get the lead
+   instantly on your phone.
+
+   SETUP (2 steps):
+   1. Create a bot with @BotFather on Telegram → copy the token
+      it gives you into TELEGRAM_BOT_TOKEN below.
+   2. Message your new bot once (anything), then open this URL
+      in your browser:
+      https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates
+      Find "chat":{"id": ...} in the response → put that number
+      into TELEGRAM_CHAT_ID below.
+
+   ⚠️ Security note: this token lives in public HTML, so anyone
+   could technically extract it and send messages through your
+   bot. It can't do anything destructive (a fresh bot only sends
+   messages), but if that risk bothers you, move this fetch call
+   behind a tiny serverless proxy (e.g. a Cloudflare Worker) that
+   holds the token server-side instead. Happy to build that too.
+   ══════════════════════════════════════════════════════ */
+const TELEGRAM_BOT_TOKEN = '8643987753:AAFKAdwXi7fqPF2xZ1D_rGyMZMsihq2aWR8';
+const TELEGRAM_CHAT_ID   = '6882406985';
+const PDF_URL = 'IBS_Navigator_Sample.pdf';
+
+let pendingAction = null;
+
+function requireLead(action) {
+  const saved = localStorage.getItem('ibs_lead_captured');
+  if (saved) {
+    performAction(action);
+    return;
+  }
+  pendingAction = action;
+  document.getElementById('leadModal').style.display = 'flex';
+  setTimeout(() => document.getElementById('leadName').focus(), 50);
+}
+
+function closeLeadModal() {
+  document.getElementById('leadModal').style.display = 'none';
+  pendingAction = null;
+}
+
+async function submitLeadForm(e) {
+  e.preventDefault();
+  const name = document.getElementById('leadName').value.trim();
+  const mobile = document.getElementById('leadMobile').value.trim();
+  const errorEl = document.getElementById('leadError');
+  const btn = document.getElementById('leadSubmitBtn');
+  errorEl.textContent = '';
+
+  if (name.length < 2) {
+    errorEl.textContent = 'Please enter your full name.';
+    return false;
+  }
+  if (!/^[6-9]\d{9}$/.test(mobile)) {
+    errorEl.textContent = 'Please enter a valid 10-digit mobile number.';
+    return false;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Please wait...';
+
+  const action = pendingAction === 'download' ? 'Download' : 'View';
+  const message = `📘 New IBS Navigator Sample Request
+
+👤 Name: ${name}
+📱 Mobile: ${mobile}
+🎯 Action: ${action} Sample
+🕒 ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
+
+  try {
+    if (TELEGRAM_BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE') {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message })
+      });
+    } else {
+      console.warn('Telegram bot token not set — lead was NOT sent. See setup notes in this script.');
+    }
+  } catch (err) {
+    console.warn('Telegram notify failed:', err);
+    // Don't block the user from viewing the sample even if the notify fails.
+  }
+
+  localStorage.setItem('ibs_lead_captured', JSON.stringify({ name, mobile, ts: Date.now() }));
+  closeLeadModal();
+  performAction(pendingAction);
+
+  btn.disabled = false;
+  btn.textContent = 'Unlock Sample →';
+  return false;
+}
+
+function performAction(action) {
+  const locked = document.getElementById('pdfLocked');
+  const iframe = document.getElementById('pdfIframe');
+
+  if (locked) locked.style.display = 'none';
+  if (iframe) {
+    iframe.src = PDF_URL;
+    iframe.style.display = 'block';
+  }
+
+  if (action === 'download') {
+    const a = document.createElement('a');
+    a.href = PDF_URL;
+    a.download = 'IBS_Navigator_Sample.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+}
+
+// Close modal on backdrop click
+document.getElementById('leadModal').addEventListener('click', (e) => {
+  if (e.target.id === 'leadModal') closeLeadModal();
+});
+
+// Mobile field: digits only
+document.getElementById('leadMobile').addEventListener('input', (e) => {
+  e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10);
+});
+</script>
 
 </body>
 </html>
